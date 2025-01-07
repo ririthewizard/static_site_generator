@@ -13,6 +13,11 @@ class TestTextNode(unittest.TestCase):
         printed = node.__repr__()
         expected = "TextNode(This is a test node, TextType.ITALIC, None)"
         self.assertEqual(printed, expected)
+    
+    def test_not_eq(self):
+        node = TextNode("This is a text node", TextType.BOLD)
+        node2 = TextNode("This is a text node", TextType.ITALIC)
+        self.assertNotEqual(node, node2)
 
 if __name__ == "__main__":
     unittest.main()
