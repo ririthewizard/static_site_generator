@@ -12,12 +12,12 @@ class ParentNode(HTMLNode):
             raise ValueError("Be a good parent, give this node's children some love")
         else:
             children_string = ""
-
+            
+            if self.child is None:
+                children_string += LeafNode(self.tag, self.value, self.props).to_html()
             for child in self.children:
-                if child is None:
-                    children_string += LeafNode(self.tag, self.value, self.props).to_html()
-                else:
-                    children_string += child.to_html()
+                children_string += child.to_html()
+        
 
 node = ParentNode(
     "p",
