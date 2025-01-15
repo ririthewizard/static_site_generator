@@ -1,7 +1,8 @@
-from src.htmlnode import HTMLNode
+from htmlnode import HTMLNode
+from leafnode import LeafNode
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag, children, props):
+    def __init__(self, tag, children, props=None):
         super().__init__(tag, None, children, props)
 
     def to_html(self):
@@ -9,3 +10,25 @@ class ParentNode(HTMLNode):
             raise ValueError("Invalid HTML: No tag")
         if self.children is None:
             raise ValueError("Be a good parent, give this node's children some love")
+        else:
+            children_string = ""
+
+            if self.children is None:
+                children_string += LeafNode(self.tag, self.value, self.props).to_html()
+            else:
+                for child in self.children:
+                    children_string += child.to_html()
+
+            return f"<{self.tag}>{children_string}</{self.tag}>"
+
+node = ParentNode(
+    "p",
+    [
+        LeafNode("b", "Bold text"),
+        LeafNode(None, "Normal text"),
+        LeafNode("i", "italic text"),
+        LeafNode(None, "Normal text"),
+    ],
+)
+
+print(node.to_html())
