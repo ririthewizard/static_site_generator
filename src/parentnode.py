@@ -13,13 +13,11 @@ class ParentNode(HTMLNode):
         else:
             children_string = ""
 
-            if self.children is None:
-                children_string += LeafNode(self.tag, self.value, self.props).to_html()
-            else:
-                for child in self.children:
+            for child in self.children:
+                if child is None:
+                    children_string += LeafNode(self.tag, self.value, self.props).to_html()
+                else:
                     children_string += child.to_html()
-
-            return f"<{self.tag}>{children_string}</{self.tag}>"
 
 node = ParentNode(
     "p",
